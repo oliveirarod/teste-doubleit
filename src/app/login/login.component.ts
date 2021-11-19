@@ -10,10 +10,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent implements OnInit {
 
-  user: string = "";
-  password: string = "";
-  msg: string = "";
-
   constructor(
     private renderer: Renderer2,
     private loginService: LoginService,
@@ -23,11 +19,16 @@ export class LoginComponent implements OnInit {
     this.renderer.addClass(document.body, 'main-gradient');
   }
 
+  user: string = "";
+  password: string = "";
+  msg: string = "";
+
   ngOnInit(): void {
   }
 
   login(content: any){
-    console.log(this.user)
+    console.log(this.user);
+    
     if(this.user != "" && this.password != ""){
 
       let login = this.loginService.login(this.user, this.password)

@@ -2,3 +2,20 @@ nav {
     background-color: white;
     box-shadow: 0 2px 6px #A8A8A829;
 }
+
+#user-info {
+    // display: flex;
+
+    div {
+        height: 36px;
+        width: 36px;
+        border: 2px solid #725172;
+        border-radius: 9px;
+    
+        img {
+            height: 100%;
+            width: 100%;
+            border-radius: 9px;
+        }
+    }
+}

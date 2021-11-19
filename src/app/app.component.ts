@@ -7,9 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
-  title = 'Rodrigo de Oliveira - Prova DoubleIt';
-  name = localStorage.getItem('name');
-
+  
   constructor(public router: Router){}
+  
+  name = localStorage.getItem('name');
 }

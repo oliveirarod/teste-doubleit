@@ -8,18 +8,19 @@ import jwt_decode from "jwt-decode";
 })
 export class HomeComponent implements OnInit {
 
-  name: string = 'Pedro Israel';
-
   constructor(private renderer: Renderer2 ) {
     this.renderer.removeClass(document.body, 'main-gradient');
     this.renderer.addClass(document.body, 'bg-gray');
   }
 
+  name = localStorage.getItem('name');
+
   ngOnInit(): void {
-    // let token = localStorage.getItem('token')
-    // console.log('oi')
-    // let decoded = jwt_decode(token);
-    // this.name = decoded['name']
+    let token: any = localStorage.getItem('token');
+    console.log('oi');
+
+    let decoded: any = jwt_decode(token);
+    this.name = decoded['name']
   }
 
 }

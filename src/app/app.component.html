@@ -1,10 +1,10 @@
 <div *ngIf="router.url != '/login'">
     <nav class="navbar navbar-expand-lg navbar-light px-5">
         <a class="navbar-brand" routerLink="">
-            <img src="../assets/logo.png">
+            <img src="../assets/logo.png" alt="Logo">
         </a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -13,7 +13,7 @@
                 <li class="nav-item">
                     <a 
                         class="nav-link" 
-                        [routerLink]="['/home']"
+                        routerLink="/home"
                         [routerLinkActive]="['active']"
                         >Início</a>
                 </li>
@@ -21,14 +21,18 @@
                 <li class="nav-item">
                     <a 
                         class="nav-link" 
-                        [routerLink]="['/produtos']"
+                        routerLink="/produtos"
                         [routerLinkActive]="['active']"
                         >Meus Produtos</a>
                 </li>
             </ul>
             
-            <div class="text-right border-left h-36">
-                <img src="\assets\images\perfil.jpg" class="img-profile  mx-3">
+            <div class="border-left d-flex justify-content-center align-items-center" id="user-info">
+                <!-- Não foi possível baixar a foto de perfil -->
+                <div class="user-photo">
+                    <img src="../assets/user-photo.jpg" alt="Foto do usuário" />
+                </div>
+
                 <small><strong>{{name}}</strong></small>
             </div>
         </div>
