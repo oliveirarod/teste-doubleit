@@ -1,0 +1,127 @@
+$file-input-height: 10rem;
+
+.btnAddProduct {
+    background: #725172;
+    border: none;
+    border-radius: 6px;
+    opacity: 1;
+    padding: 0 1rem;
+    color: white;
+}
+
+.closeModalButton {
+    border: 0;
+    font-size: 2rem;
+    background: white;
+}
+
+.newProductForm {
+    width: 100%;
+    padding: 0 0.5rem;  
+
+    input, textarea {
+        &::placeholder {
+            padding-left: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        margin-bottom: 1rem;
+    }
+
+    .priceAndDate {
+        display: flex;
+        justify-content: space-between;
+
+        input {
+            width: 48%
+        }
+    }
+
+    .image-upload {
+        border: 1px solid #CCC;
+        border-radius: 6px;
+        height: $file-input-height;
+        margin-bottom: 1rem;
+
+        .image-already-selected {
+
+            .selected-file {
+                background-color: white;
+                color: #725172;
+                border: 1.4px solid #725172;
+                border-radius: 40px;
+                padding: 0 1rem;
+                margin: 1rem;
+                display: flex;
+                align-items: center;
+
+                span {
+                    font-size: 1.5rem;
+                    margin-left: 3rem;
+                }
+            }
+        }
+
+        .image-not-selected {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            margin: auto 0;
+
+            p {
+                color: #626262;
+                margin: 0;
+            }
+    
+            label {
+                padding: 0.5rem 1.25rem;
+                background-color: #725172;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                margin-left: 0.5rem;
+            }
+    
+            input {
+                // visibility: hidden;
+                position: absolute;
+                top: 60%;
+                left: 5.5%;
+                height: $file-input-height;
+                width: 100%;
+                z-index: 1;
+                color: transparent;
+                overflow: hidden;
+                font-size: 0rem;
+            }
+
+            div {
+                position: absolute;
+                top: 60%;
+                left: 5.5%;
+                background: white;
+                z-index: 2;
+                height: 0.35rem;
+                width: 1rem;
+            }
+        }
+    }
+}
+
+.newProductFormButtons {
+    button {
+        padding: 0.5rem 1.25rem;
+        background-color: #725172;
+        color: white;
+        border: none;
+        border-radius: 6px;
+
+        &:first-child {
+            background-color: white;
+            color: #725172;
+            border: 1.4px solid #725172;
+            border-radius: 6px;
+        }
+    }
+}

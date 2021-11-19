@@ -1,1 +1,120 @@
-<p>product-list works!</p>
+<div class="container-fluid px-5">
+    <div class="row">
+        <div class="mt-4 col-12 d-flex justify-content-between">
+            <h2>Meus Produtos.</h2>
+
+            <button class="btnAddProduct" (click)="newProductModal(detailModal)">Adicionar Produto</button>
+        </div>
+
+        <hr class="mt-2">
+    </div>
+    
+
+    <!-- <div class="row my-3">
+        <div class="col-md-3 col-sm-12" *ngFor="let product of products; index as i">
+            <div class="card my-2">
+                <div class="text-right">
+                    <a class="text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-lg text-default pt-3 pr-2 menu-card "></i>
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" (click)="open(detailModal, i)"><span class="badge badge-pill badge-danger p-1"><i class="fas fa-pencil-alt fa-sm"></i> </span> Editar</a>
+                        <a class="dropdown-item" (click)="confirmDelete(deleteModal, i)"><span class="badge badge-pill badge-secondary p-1"><i class="fas fa-trash fa-sm"></i> </span> Excluir</a>
+                    </div>
+                </div>
+                <img class="card-img-top px-4 product-img" [src]="product.img" [alt]="'Foto do ' + product.title">
+
+                <div class="card-body">
+                    <div class="product-title">{{product.title}}</div>
+                    <p class="product-desc mt-2">{{product.desc}}</p>
+                    <div class="product-price">R$ {{product.price}}</div>
+
+                    <div class="row">
+                        <div class="col-12">
+                            <hr>
+                        </div>
+                        <div class=" mx-1" *ngFor="let category of product.categories">
+                            <button type="button" class="btn btn-main-alt badge-pill px-3">{{category}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+</div>
+
+<ng-template #detailModal let-modal>
+    <div class="modal-header ps-4 pe-3 py-0">
+        <h6 class="modal-title" id="modal-basic-title"><strong>{{ productAction }} Produto.</strong></h6>
+        
+        <button type="button" class="closeModalButton" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body pb-0">
+        <form #newProductModal="ngForm">
+            <div class="newProductForm">
+
+                <input class="form-control" name="name" placeholder="Nome" type="text" ngModel required ngbAutofocus/>
+                
+                <textarea class="form-control" name="desc" placeholder="Descrição" ngModel required></textarea>
+
+                <div class="priceAndDate">
+                    <input class="form-control" name="price" placeholder="Preço" type="text" ngModel required>
+
+                    <input class="form-control" name="date" placeholder="Data Remessa" type="text" onfocus="(this.type='date')" ngModel required>
+                </div>
+                
+                <input class="form-control" name="categories" placeholder="Categorias ( separe-as por vírgulas )" type="text" ngModel required>
+
+                <div>
+                    <div class="image-upload">
+                        <div class="image-already-selected" *ngIf="selectedImage != null">
+                            <button class="selected-file" type="button" (click)="selectedImage = null">
+                                {{ selectedImage.name }}
+
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="image-not-selected" *ngIf="selectedImage == null">
+                            <input id="input-product-img" name="imageUrl" type="file" accept="image/*" (change)="onFileSelected($event)" />
+
+                            <div></div>
+
+                            <p>Arraste uma imagem ou</p>
+    
+                            <label for="input-product-img">
+                                Selecionar
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer newProductFormButtons">
+        <button type="button" (click)="modal.close('Save click')">Cancelar</button>
+
+        <button type="button" (click)="addProduct(newProductModal)">Salvar</button>
+    </div>
+</ng-template>
+
+<!-- <ng-template #deleteModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title"><strong>Remover Produto.</strong></h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        Você realmente deseja excluir esse produto?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-main-alt" (click)="modal.close('Save click')">Cancelar</button>
+        <button type="button" class="btn btn-outline-dark btn-main" (click)="deleteProduct()">Confirmar</button>
+    </div>
+</ng-template> -->
