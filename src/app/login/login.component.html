@@ -1,0 +1,40 @@
+<div class="login-container">
+    <div class="gradient-background"></div>
+
+    <div class="login-content">
+        <form class="col-md-8 m-auto ">
+            <h1 class="tk-proxima-nova">Entre.</h1>
+            <hr class="mb-5">
+
+            <input
+                placeholder="Nome" 
+                type="text" 
+                [(ngModel)]="user" 
+                name="user">
+                
+            <input 
+                placeholder="Senha" 
+                type="password" 
+                [(ngModel)]="password" 
+                name="password">
+
+            <button (click)="login(errorModal)">ENTRAR</button>
+        </form>
+    </div>
+</div>
+
+<ng-template #errorModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title"><strong>Atenção</strong></h6>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        {{msg}}
+    </div>
+    <div class="modal-footer">
+
+        <button type="button" class="btn btn-outline-dark btn-main" (click)="modal.close('Save click')">OK</button>
+    </div>
+</ng-template>
