@@ -13,13 +13,11 @@ export class LoginService {
   login(user: string, password: string) {
 
     if(user == "admin" && password == "admin"){
-
       let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJuYW1lIjoiSm9lIFNhbSJ9.RpYD7qsSX8UvhHeBarSe67yJo-OXU2UNtIvmme0u2vo';
 
       localStorage.setItem('token', token);
 
       let decoded: any = jwt_decode(token);
-      console.log(decoded);
 
       localStorage.setItem('name', decoded['name'])
 
@@ -29,7 +27,6 @@ export class LoginService {
       return false
     }
   }
-
 
   //Erros
   handleError(error: any) {

@@ -2,32 +2,40 @@
     <div class="row">
         <div class="mt-4 col-12 d-flex justify-content-between">
             <h2>Meus Produtos.</h2>
-
-            <button class="btnAddProduct" (click)="newProductModal(detailModal)">Adicionar Produto</button>
+            <button class="btn-add-product" (click)="newProductModal(detailModal, 'Novo', -1)">Adicionar Produto</button>
         </div>
-
         <hr class="mt-2">
     </div>
 
     <div class="product-cards">
         <div *ngFor="let product of products; index as i">
             <div class="card my-2">
-                <!-- <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
-                    <button class="btn btn-outline-primary mr-2" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Toggle dropdown</button>
+                <div class="d-flex justify-content-end product-dropdown" ngbDropdown #myDrop="ngbDropdown" placement="left-top">
+                    <button id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()" class="btn-dropdown-product">
+                        <fa-icon [icon]="faEllipsisV" (click)="$event.stopPropagation(); myDrop.open();"></fa-icon>
+                    </button>
+
                     <div ngbDropdownMenu aria-labelledby="dropdownManual">
-                        <button ngbDropdownItem>Action - 1</button>
-                        <button ngbDropdownItem>Another Action</button>
-                        <button ngbDropdownItem>Something else is here</button>
+                        <button ngbDropdownItem class="d-flex justify-content-center px-0" (click)="newProductModal(detailModal, 'Editar', i)">
+                            <fa-icon [icon]="faPen" class="me-4"></fa-icon>
+
+                            <span>Editar</span>
+                        </button>
+                        <hr class="w-100 my-1">
+                        <button ngbDropdownItem class="d-flex justify-content-center px-0" (click)="confirmDelete(deleteModal, i)">
+                            <fa-icon [icon]="faTrash" class="me-4"></fa-icon>
+
+                            <span>Excluir</span>
+                        </button>
                     </div>
-                </div> -->
-                <fa-icon [icon]="faEllipsisV"></fa-icon>
+                </div>
 
                 <img class="card-img-top" [src]="product.img" [alt]="'Foto do ' + product.name">
 
                 <div class="card-body">
                     <h5 class="product-name">{{product.name}}</h5>
                     <p class="product-desc mt-2">{{product.desc}}</p>
-                    <h4 class="product-price">R$ {{product.price}}</h4>
+                    <h4 class="product-price">R$ {{product.price + ',00'}}</h4>
 
                     <hr>
                     <div *ngFor="let category of product.categories" class="product-categories">
@@ -42,30 +50,40 @@
 <ng-template #detailModal let-modal>
     <div class="modal-header ps-4 pe-3 py-0">
         <h6 class="modal-title" id="modal-basic-title"><strong>{{ productAction }} Produto.</strong></h6>
-        
-        <button type="button" class="closeModalButton" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <button type="button" class="close-modal-button" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 
     <div class="modal-body pb-0">
-        <form #newProductModal="ngForm">
+        <form [formGroup]="productForm" #ProductModal="ngForm" (ngSubmit)="onModalSubmit()">
             <div class="newProductForm">
+                <div class="form-group">
+                    <input class="form-control" name="name" placeholder="Nome" type="text" formControlName="name" NgbAutoFocus/>
 
-                <input class="form-control" name="name" placeholder="Nome" type="text" ngModel required ngbAutofocus/>
-                
-                <textarea class="form-control" name="desc" placeholder="Descrição" ngModel required></textarea>
-
-                <div class="priceAndDate">
-                    <input class="form-control" name="price" placeholder="Preço" type="text" ngModel required>
-
-                    <input class="form-control" name="date" placeholder="Data Remessa" type="text" onfocus="(this.type='date')" ngModel required>
+                    <span class="text-danger" *ngIf="this.productForm.controls['name'].invalid && this.productForm.controls['name'].touched">
+                        O nome é necessário
+                    </span>
                 </div>
                 
-                <input class="form-control" name="categories" placeholder="Categorias ( separe-as por vírgulas )" type="text" ngModel required>
+                <textarea class="form-control mt-3" name="desc" placeholder="Descrição" formControlName="desc"></textarea>
+
+                <div class="priceAndDate mt-3">
+                    <div class="form-group">
+                        <input class="form-control w-100" name="price" placeholder="Preço" type="number" formControlName="price">
+    
+                        <span class="text-danger" *ngIf="this.productForm.controls['price'].invalid && this.productForm.controls['price'].touched">
+                            O preço é necessário
+                        </span>
+                    </div>
+
+                    <input class="form-control" name="date" placeholder="Data Remessa" type="text" onfocus="(this.type='date')" formControlName="date">
+                </div>
+                
+                <input class="form-control mt-3" name="categories" placeholder="Categorias ( separe-as por vírgulas )" type="text" formControlName="categories">
 
                 <div>
-                    <div class="image-upload">
+                    <div class="image-upload mt-3">
                         <div class="image-already-selected" *ngIf="selectedImage != null">
                             <button class="selected-file" type="button" (click)="selectedImage = null">
                                 {{ selectedImage.name }}
@@ -75,7 +93,7 @@
                         </div>
 
                         <div class="image-not-selected" *ngIf="selectedImage == null">
-                            <input id="input-product-img" name="file" type="file" accept="image/*" (change)="onFileSelected($event)" />
+                            <input id="input-product-img" name="file" type="file" accept="image/*" (change)="onFileSelected($event)" formControlName="img"/>
 
                             <div></div>
 
@@ -87,18 +105,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="new-product-form-buttons">
+                    <button type="button" (click)="modal.close()">Cancelar</button>
+                    <button class="teste" type="submit" [disabled]="productForm.invalid">Salvar</button>
+                </div>
             </div>
         </form>
     </div>
-
-    <div class="modal-footer newProductFormButtons">
-        <button type="button" (click)="modal.close('Save click')">Cancelar</button>
-
-        <button type="button" (click)="addProduct(newProductModal)">Salvar</button>
-    </div>
 </ng-template>
 
-<!-- <ng-template #deleteModal let-modal>
+<ng-template #deleteModal let-modal>
     <div class="modal-header">
         <h6 class="modal-title" id="modal-basic-title"><strong>Remover Produto.</strong></h6>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -108,8 +125,8 @@
     <div class="modal-body">
         Você realmente deseja excluir esse produto?
     </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark btn-main-alt" (click)="modal.close('Save click')">Cancelar</button>
-        <button type="button" class="btn btn-outline-dark btn-main" (click)="deleteProduct()">Confirmar</button>
+    <div class="modal-footer confirm-product-delect">
+        <button type="button" (click)="modal.close('Save click')">Cancelar</button>
+        <button type="button" (click)="deleteProduct()">Confirmar</button>
     </div>
-</ng-template> -->
+</ng-template>

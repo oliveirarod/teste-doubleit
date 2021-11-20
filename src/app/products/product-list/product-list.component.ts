@@ -1,10 +1,10 @@
-import { Component, OnInit, Renderer2  } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductType } from '../ProductType';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import { faEllipsisV, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-product-list',
@@ -13,74 +13,62 @@ import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 })
 export class ProductListComponent implements OnInit {
 
-  constructor(private renderer: Renderer2, public restApi: ProductsService, private modalService: NgbModal ) {
-    this.renderer.removeClass(document.body, 'main-gradient');
-    this.renderer.addClass(document.body, 'bg-gray');
+  constructor(public restApi: ProductsService, private modalService: NgbModal, private formBuilder: FormBuilder ) {
   }
 
   // FontAwesome icons
   faEllipsisV = faEllipsisV;
+  faPen = faPen;
+  faTrash = faTrash;
+
+  productForm = this.formBuilder.group({
+    id: 0,
+    name: ['', [Validators.required]],
+    date: '',
+    img: '',
+    desc: '',
+    price: ['', Validators.required],
+    categories: ''
+  })
 
   products: ProductType[] = [];
   productAction: "Novo" | "Editar" = "Novo";
   selectedImage: File | null = null;
   selectedImageBase64: any = '';
+  deleteId: number;
+  editId: number;
 
   onFileSelected(event: any) {
     if(event.target.files.length > 0) {
       this.selectedImage = event.target.files[0];
-
       let reader = new FileReader();
-
       reader.readAsDataURL(event.target.files[0]);
 
       reader.onload = () => {
-        console.log(reader.result);
         this.selectedImageBase64 = reader.result;
-      }
-
-      reader.onerror = (error) => {
-        console.log('Error: ', error);
       }
     }
   }
 
   ngOnInit(): void {
-    this.getProducts()
+    this.getProducts();
   }
 
-  getProducts(){
+  getProducts() {
     this.products = this.restApi.getProducts();
   }
 
-  newProductModal(content: any) {
-    this.productAction = "Novo";
+  confirmDelete(content: any, id: number) {
     this.modalService.open(content);
+    this.deleteId = id;
   }
 
-  confirmDelete(id: number){
-    this.modalService.open(this.products[id]);
-  }
-
-  deleteProduct(id: number){
+  deleteProduct(){
     this.modalService.dismissAll();
-    return this.restApi.deleteProduct(id);
+    return this.restApi.deleteProduct(this.deleteId);
   }
 
-  saveProduct(){
-    // let id: number = this.products.length;
-    // let content: ProductType = this.products[id];
-
-    // if(content.action == "Novo"){
-    //   this.addProduct();
-    // }
-    // else{
-    //   this.editProduct(id);
-    // }
-  }
-
-  addProduct(product: NgForm){
-
+  addProduct(product: any) {
     let newProduct: ProductType = {
       id: this.products.length,
       name: product.value.name,
@@ -88,16 +76,14 @@ export class ProductListComponent implements OnInit {
       img: this.selectedImageBase64,
       desc: product.value.desc,
       price: product.value.price,
-      categories: product.value.categories.replaceAll(" ", "").split(",")
+      categories: product.value.categories?.replaceAll(" ", "").split(",")
     }
-    
-    console.log(newProduct);
     
     this.modalService.dismissAll();
     return this.restApi.createProduct(newProduct);
   }
 
-  editProduct(id: number){
+  editProduct(id: number) {
     let product: ProductType = {
       id: id,
       name: this.products[id].name,
@@ -112,21 +98,82 @@ export class ProductListComponent implements OnInit {
     return this.restApi.updateProduct(id, product);
   }
 
-  // handleInputChange(event: any) {
-  //   var file = event.dataTransfer ? event.dataTransfer.files[0] : event.target.files[0];
-  //   var pattern = /image-*/;
-  //   var reader = new FileReader();
-  //   if (!file.type.match(pattern)) {
-  //     alert('invalid format');
-  //     return;
-  //   }
-  //   reader.onload = this._handleReaderLoaded.bind(this);
-  //   reader.readAsDataURL(file);
-  // }
+  newProductModal(content: any, action: string, id: number){
+    if (action == "Editar") {
+      this.productAction = "Editar";
+      this.modalService.open(content);
+      this.editId = id;
+      this.productForm.setValue(this.products[id]);
+    } 
+    else {
+      this.productAction = "Novo"
+      this.modalService.open(content);
+      this.productForm.get('name')?.untouched;
+      this.productForm.get('price')?.untouched;
+      this.productForm.setValue({
+        id: 0,
+        name: '',
+        date: '',
+        img: '',
+        desc: '',
+        price: '',
+        categories: ''
+      });
+    }
+  }
 
-  // _handleReaderLoaded(event) {
-  //   let reader = event.target;
-  //   this.productImg = reader.result;
-  //   console.log(this.productImg)
-  // }
+  onModalSubmit() {
+    if(this.productAction == "Novo") {
+      let newProduct: ProductType = {
+        id: this.products.length,
+        name: this.productForm.value.name,
+        date: this.productForm.value.date,
+        img: this.selectedImageBase64,
+        desc: this.productForm.value.desc,
+        price: this.productForm.value.price,
+        categories: this.productForm.value.categories.replaceAll(" ", "").split(",")
+      }
+      
+      this.productForm.get('name')?.untouched;
+      this.productForm.get('price')?.untouched;
+      this.productForm.setValue({
+        id: 0,
+        name: '',
+        date: '',
+        img: '',
+        desc: '',
+        price: '',
+        categories: ''
+      });
+
+      this.modalService.dismissAll();
+      return this.restApi.createProduct(newProduct);
+    } 
+    else {
+      let editedProduct: ProductType = {
+        id: this.editId,
+        name: this.productForm.value.name,
+        date: this.productForm.value.date,
+        img: this.products[this.editId].img,
+        desc: this.productForm.value.desc,
+        price: this.productForm.value.price,
+        categories: this.productForm.value.categories.toString().replaceAll(" ", "").split(",")
+      }
+
+      this.productForm.get('name')?.untouched;
+      this.productForm.get('price')?.untouched;
+      this.productForm.setValue({
+        id: 0,
+        name: '',
+        date: '',
+        img: '',
+        desc: '',
+        price: '',
+        categories: ''
+      });
+      
+      this.modalService.dismissAll();
+      return this.restApi.updateProduct(this.editId, editedProduct);
+    }
+  }
 }

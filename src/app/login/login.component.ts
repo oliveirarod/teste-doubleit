@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -10,37 +10,27 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(
-    private renderer: Renderer2,
-    private loginService: LoginService,
-    private router: Router, 
-    private modalService: NgbModal 
-  ) {
-    this.renderer.addClass(document.body, 'main-gradient');
-  }
+  constructor(private loginService: LoginService,private router: Router, private modalService: NgbModal) {}
 
-  user: string = "";
-  password: string = "";
-  msg: string = "";
+  user: string;
+  password: string;
+  msg: string;
 
   ngOnInit(): void {
   }
 
   login(content: any){
-    console.log(`user: ${this.user} password: ${this.password}`);
     
-    if(this.user != "" && this.password != ""){
-
+    if (this.user != "" && this.password != "") {
       let login = this.loginService.login(this.user, this.password);
 
-      if(login){
+      if (login) {
         this.router.navigate(['']);
       }
-      else{
+      else {
         this.msg = "Login e/ou senha incorretos";
         this.modalService.open(content);
       }
-      
     }
     else{
       this.msg = "Preencha o usuário e senha para efetuar o login"

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { Observable, throwError } from 'rxjs';
-import { retry, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { ProductType } from '../products/ProductType';
 
 @Injectable({
@@ -19,7 +18,7 @@ export class ProductsService {
       date: '2021-04-25',
       img: '../../assets/macbook.jpg',
       desc: 'MacBook Pro com a melhor tecnologia do mercado, trazendo muita inovação e velocidade.',
-      price:'17.499,00',
+      price:'17.499',
       categories:[
         'Apple',
         'MacBook'
@@ -31,7 +30,7 @@ export class ProductsService {
       date: '2021-04-25',
       img: '../../assets/macbook2.jpg',
       desc: 'MacBook Pro com a melhor tecnologia do mercado, trazendo muita inovação e velocidade.',
-      price:'16.499,00',
+      price:'16.499',
       categories:[
         'Apple',
         'MacBook'
@@ -43,13 +42,12 @@ export class ProductsService {
       date: '2021-04-25',
       img: '../../assets/macbook3.jpg',
       desc: 'MacBook Pro com a melhor tecnologia do mercado, trazendo muita inovação e velocidade.',
-      price:'15.499,00',
+      price:'15.499',
       categories:[
         'Apple',
         'MacBook'
       ]
     }]
-  
   
   //Retorna todos os produtos
   getProducts(){

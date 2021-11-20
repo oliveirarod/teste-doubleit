@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import jwt_decode from "jwt-decode";
 
 @Component({
@@ -8,16 +8,12 @@ import jwt_decode from "jwt-decode";
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private renderer: Renderer2 ) {
-    this.renderer.removeClass(document.body, 'main-gradient');
-    this.renderer.addClass(document.body, 'bg-gray');
-  }
+  constructor() {}
 
-  name = localStorage.getItem('name');
+  name: string;
 
   ngOnInit(): void {
     let token: any = localStorage.getItem('token');
-
     let decoded: any = jwt_decode(token);
     this.name = decoded['name']
   }
