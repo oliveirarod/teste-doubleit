@@ -1,9 +1,10 @@
 import { Component, OnInit, Renderer2  } from '@angular/core';
 import { ProductsService } from 'src/app/services/products.service'
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-// import { isThisTypeNode } from 'typescript';
 import { ProductType } from '../ProductType';
 import { NgForm } from '@angular/forms';
+
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-product-list',
@@ -16,6 +17,9 @@ export class ProductListComponent implements OnInit {
     this.renderer.removeClass(document.body, 'main-gradient');
     this.renderer.addClass(document.body, 'bg-gray');
   }
+
+  // FontAwesome icons
+  faEllipsisV = faEllipsisV;
 
   products: ProductType[] = [];
   productAction: "Novo" | "Editar" = "Novo";

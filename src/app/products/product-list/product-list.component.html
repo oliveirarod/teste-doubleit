@@ -12,9 +12,15 @@
     <div class="product-cards">
         <div *ngFor="let product of products; index as i">
             <div class="card my-2">
-                <div>
-
-                </div>
+                <!-- <div class="d-inline-block" ngbDropdown #myDrop="ngbDropdown">
+                    <button class="btn btn-outline-primary mr-2" id="dropdownManual" ngbDropdownAnchor (focus)="myDrop.open()">Toggle dropdown</button>
+                    <div ngbDropdownMenu aria-labelledby="dropdownManual">
+                        <button ngbDropdownItem>Action - 1</button>
+                        <button ngbDropdownItem>Another Action</button>
+                        <button ngbDropdownItem>Something else is here</button>
+                    </div>
+                </div> -->
+                <fa-icon [icon]="faEllipsisV"></fa-icon>
 
                 <img class="card-img-top" [src]="product.img" [alt]="'Foto do ' + product.name">
 
