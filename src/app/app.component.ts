@@ -11,4 +11,5 @@ export class AppComponent {
   constructor(public router: Router){}
   
   name = localStorage.getItem('name');
+  public isMenuCollapsed: boolean = true;
 }

@@ -20,11 +20,24 @@ export class ProductListComponent implements OnInit {
   products: ProductType[] = [];
   productAction: "Novo" | "Editar" = "Novo";
   selectedImage: File | null = null;
+  selectedImageBase64: any = '';
 
   onFileSelected(event: any) {
     if(event.target.files.length > 0) {
-      console.log(event.target.files[0])
       this.selectedImage = event.target.files[0];
+
+      let reader = new FileReader();
+
+      reader.readAsDataURL(event.target.files[0]);
+
+      reader.onload = () => {
+        console.log(reader.result);
+        this.selectedImageBase64 = reader.result;
+      }
+
+      reader.onerror = (error) => {
+        console.log('Error: ', error);
+      }
     }
   }
 
@@ -110,30 +123,26 @@ export class ProductListComponent implements OnInit {
     // else{
     //   this.editProduct(id);
     // }
-
-
   }
 
   addProduct(product: NgForm){
     let newProduct: ProductType = {
       id: this.products.length,
       name: product.value.name,
-      date: '',
-      img: '',
-      file: '',
-      desc: '',
-      price: '',
-      categories: [
-        'Apple',
-        'MacBook'
-      ]
+      date: product.value.date,
+      img: this.selectedImageBase64,
+      desc: product.value.desc,
+      price: product.value.price,
+      categories: product.value.categories.replaceAll(" ", "").split(",")
     }
     
     // this.getProducts();
-    console.log(product.value.nome);
+    console.log(newProduct);
     
     this.modalService.dismissAll();
-    // return this.restApi.createProduct(product.value);
+    // return this.restApi.createProduct(newProduct);
+    this.restApi.createProduct(newProduct);
+    console.log(this.products);
 
     //TODO: permitir que o usuario selecione a foto do produto
   }
@@ -144,7 +153,6 @@ export class ProductListComponent implements OnInit {
       name: this.products[id].name,
       date: this.products[id].date,
       img: this.products[id].img,
-      file: this.products[id].file,
       desc: this.products[id].desc,
       price: this.products[id].price,
       categories: this.products[id].categories

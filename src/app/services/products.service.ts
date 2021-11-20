@@ -17,8 +17,7 @@ export class ProductsService {
       id: 1,
       name: 'MacBook Pro 2021 16"',
       date: '2021-04-25',
-      img: '/assets/images/macbook.jpg',
-      file: '',
+      img: '../../assets/macbook.jpg',
       desc: 'MacBook Pro com a melhor tecnologia do mercado, trazendo muita inovação e velocidade.',
       price:'17.499,00',
       categories:[
@@ -30,8 +29,7 @@ export class ProductsService {
       id: 2,
       name: 'MacBook Pro 2020 16"',
       date: '2021-04-25',
-      img: '/assets/images/note.jpg',
-      file: '',
+      img: '../../assets/macbook2.jpg',
       desc: 'MacBook Pro com a melhor tecnologia do mercado, trazendo muita inovação e velocidade.',
       price:'16.499,00',
       categories:[
@@ -43,8 +41,7 @@ export class ProductsService {
       id: 3,
       name: 'MacBook Pro 20219 16"',
       date: '2021-04-25',
-      img: '/assets/images/note.jpg',
-      file: '',
+      img: '../../assets/macbook3.jpg',
       desc: 'MacBook Pro com a melhor tecnologia do mercado, trazendo muita inovação e velocidade.',
       price:'15.499,00',
       categories:[

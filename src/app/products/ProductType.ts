@@ -3,7 +3,6 @@ export interface ProductType {
     name: string;
     date: string;
     img: string;
-    file: string;
     desc: string;
     price: string;
     categories: string[]

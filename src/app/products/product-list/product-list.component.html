@@ -8,39 +8,29 @@
 
         <hr class="mt-2">
     </div>
-    
 
-    <!-- <div class="row my-3">
-        <div class="col-md-3 col-sm-12" *ngFor="let product of products; index as i">
+    <div class="product-cards">
+        <div *ngFor="let product of products; index as i">
             <div class="card my-2">
-                <div class="text-right">
-                    <a class="text-right" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-ellipsis-v fa-lg text-default pt-3 pr-2 menu-card "></i>
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" (click)="open(detailModal, i)"><span class="badge badge-pill badge-danger p-1"><i class="fas fa-pencil-alt fa-sm"></i> </span> Editar</a>
-                        <a class="dropdown-item" (click)="confirmDelete(deleteModal, i)"><span class="badge badge-pill badge-secondary p-1"><i class="fas fa-trash fa-sm"></i> </span> Excluir</a>
-                    </div>
+                <div>
+                    
                 </div>
-                <img class="card-img-top px-4 product-img" [src]="product.img" [alt]="'Foto do ' + product.title">
+
+                <img class="card-img-top" [src]="product.img" [alt]="'Foto do ' + product.name">
 
                 <div class="card-body">
-                    <div class="product-title">{{product.title}}</div>
+                    <h5 class="product-name">{{product.name}}</h5>
                     <p class="product-desc mt-2">{{product.desc}}</p>
-                    <div class="product-price">R$ {{product.price}}</div>
+                    <h4 class="product-price">R$ {{product.price}}</h4>
 
-                    <div class="row">
-                        <div class="col-12">
-                            <hr>
-                        </div>
-                        <div class=" mx-1" *ngFor="let category of product.categories">
-                            <button type="button" class="btn btn-main-alt badge-pill px-3">{{category}}</button>
-                        </div>
+                    <hr>
+                    <div *ngFor="let category of product.categories" class="product-categories">
+                        <button type="button" class="btn">{{ category }}</button>
                     </div>
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 </div>
 
 <ng-template #detailModal let-modal>
@@ -79,7 +69,7 @@
                         </div>
 
                         <div class="image-not-selected" *ngIf="selectedImage == null">
-                            <input id="input-product-img" name="imageUrl" type="file" accept="image/*" (change)="onFileSelected($event)" />
+                            <input id="input-product-img" name="file" type="file" accept="image/*" (change)="onFileSelected($event)" />
 
                             <div></div>
 
@@ -89,7 +79,6 @@
                                 Selecionar
                             </label>
                         </div>
-
                     </div>
                 </div>
             </div>

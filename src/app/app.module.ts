@@ -10,6 +10,7 @@ import { ProductsModule } from './products/products.module';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthService } from './services/auth.service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     AppRoutingModule,
     HomeModule,
     FormsModule,
-    ProductsModule
+    ProductsModule,
+    NgbCollapseModule
   ],
   providers: [
     AuthGuardService, 
