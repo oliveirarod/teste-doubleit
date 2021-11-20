@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     let token: any = localStorage.getItem('token');
-    console.log('oi');
+    console.log('home carregada');
 
     let decoded: any = jwt_decode(token);
     this.name = decoded['name']

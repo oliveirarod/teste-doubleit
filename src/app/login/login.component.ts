@@ -27,24 +27,24 @@ export class LoginComponent implements OnInit {
   }
 
   login(content: any){
-    console.log(this.user);
+    console.log(`user: ${this.user} password: ${this.password}`);
     
     if(this.user != "" && this.password != ""){
 
-      let login = this.loginService.login(this.user, this.password)
+      let login = this.loginService.login(this.user, this.password);
+
       if(login){
         this.router.navigate(['']);
-        
       }
       else{
-        this.msg = "Login e/ou senha incorretos"
-        this.modalService.open(content)
+        this.msg = "Login e/ou senha incorretos";
+        this.modalService.open(content);
       }
       
     }
     else{
       this.msg = "Preencha o usuário e senha para efetuar o login"
-      this.modalService.open(content)
+      this.modalService.open(content);
     }
   }
 }

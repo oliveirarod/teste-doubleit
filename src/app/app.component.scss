@@ -9,7 +9,7 @@ nav {
         border-left: 1px solid #CCC;
         display: none;
 
-        @media(min-width: 768px) {
+        @media(min-width: 992px) {
             display: inline;
         }
     }
@@ -21,7 +21,7 @@ nav {
         border-radius: 9px;
         margin: 1rem 1.25rem 1rem 0;
 
-        @media(min-width: 768px) {
+        @media(min-width: 992px) {
             margin: 0 1.25rem;
         }
     }

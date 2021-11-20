@@ -41,16 +41,6 @@ export class ProductListComponent implements OnInit {
     }
   }
 
-  // productName
-  // productDesc
-  // productPrice
-  // productDate
-  // productFile
-  // productImg
-  // acaoProduto = "Novo"
-  // deleteId = ""
-  // editId = ""
-
   ngOnInit(): void {
     this.getProducts()
   }
@@ -59,48 +49,8 @@ export class ProductListComponent implements OnInit {
     this.products = this.restApi.getProducts();
   }
 
-  // openInfo(content: any, id: number) {
-  //   this.acaoProduto = "Novo"
-  //   this.productName = ""
-  //   this.productDesc = ""
-  //   this.productDate = ""
-  //   this.productFile = ""
-  //   this.productPrice = ""
-  //   this.productImg = ""
-
-  //   if(id){
-  //     console.log(id)
-  //     this.acaoProduto = "Editar"
-  //     this.productName = this.products[id].title
-  //     this.productDesc = this.products[id].desc
-  //     this.productDate = this.products[id].date
-  //     this.productFile = this.products[id].file
-  //     this.productPrice = this.products[id].price
-  //     this.productImg = this.products[id].img
-  //     this.editId = id
-  //   }
-
-  //   this.modalService.open(content)
-  // }
-
   newProductModal(content: any) {
     this.productAction = "Novo";
-
-    // if(id) {
-    // } else {
-    //   this.modalService.open({
-    //     id: this.products.length,
-    //     action: "Novo",
-    //     title: '',
-    //     date: '',
-    //     img: '',
-    //     file: '',
-    //     desc: '',
-    //     price: '',
-    //     categories: []
-    //   });
-    // }
-
     this.modalService.open(content);
   }
 
@@ -126,6 +76,7 @@ export class ProductListComponent implements OnInit {
   }
 
   addProduct(product: NgForm){
+
     let newProduct: ProductType = {
       id: this.products.length,
       name: product.value.name,
@@ -136,15 +87,10 @@ export class ProductListComponent implements OnInit {
       categories: product.value.categories.replaceAll(" ", "").split(",")
     }
     
-    // this.getProducts();
     console.log(newProduct);
     
     this.modalService.dismissAll();
-    // return this.restApi.createProduct(newProduct);
-    this.restApi.createProduct(newProduct);
-    console.log(this.products);
-
-    //TODO: permitir que o usuario selecione a foto do produto
+    return this.restApi.createProduct(newProduct);
   }
 
   editProduct(id: number){
